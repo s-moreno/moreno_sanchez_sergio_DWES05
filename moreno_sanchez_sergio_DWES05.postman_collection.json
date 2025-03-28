@@ -1,0 +1,388 @@
+{
+	"info": {
+		"_postman_id": "0a6efc13-1c71-437f-895d-494b1477ed8c",
+		"name": "DWES05",
+		"description": "En este archivo de ejemplo encontrarás las consultas HTTP básicas necesarias para completar la Tarea Evaluativa 1 de la Unidad Didáctica 5 de DWES. El ejemplo está basado en una aplicación de un almacén de productos de una ambulancia de emergencias, en la que podrás realizar operaciones CRUD sobre las publicaciones o posts de un blog.\n\nEstá basado en el framework de Laravel en su versión 12.\n\n🔍 **¿Qué puedes hacer?**  \nCon esta colección, podrás ejecutar las operaciones básicas de un sistema REST para gestionar los productos de un almacén. Entre las operaciones disponibles, encontrarás:\n\n1. **Recuperar la información de todos los productos**: Verás la lista completa de los productos y sus detalles.\n    \n2. **Consultar un producto específico por su ID**: Obtendrás los detalles de un prodcuto en concreto.\n    \n3. **Insertar un nuevo producto**: Podrás añadir un nuevo producto al almacén.\n    \n4. **Modificar un producto existente**: Actualiza el contenido completo de un producto.\n    \n5. **Modficar parcialmente un producto existente**: Actualizar algún campo de un producto.\n    \n6. **Eliminar un post**: Elimina un producto del blog de forma definitiva.\n    \n7. **Obtener los productos bajo stock mínimo**: Mostrará una lista de los productos que están por debajo del mínimo establecido para sí, así como la cantidad necesario que habrá que solicitar para reponerlo y que vuelva a estar igualado a su stock mínimo.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34019719"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get all Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by ID Product",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/products/{{id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Producto Nuevo {{$randomLoremWords}} {{$randomProduct}}\",\r\n    \"stock_actual\": {{random_stock_actual}},\r\n    \"stock_minimo\": {{random_stock_minimo}},\r\n    \"id_categoria\": {{random_id_categoria}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Producto Actualizado {{$randomLoremWords}} {{$randomProduct}}\",\r\n    \"stock_actual\": {{random_actual}},\r\n    \"stock_minimo\": {{random_minimo}},\r\n    \"id_categoria\": {{random_id_categoria}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/products/{{id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/products/{{id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get under Stock min",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/products/min",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"min"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Get all Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by ID Category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/categories/{{id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Categoría Nueva {{$randomInt}} {{$randomInt}}\",\r\n    \"descripcion\": \"{{$randomLoremText}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Categoría Actualizada {{$randomInt}} {{$randomInt}}\",\r\n    \"descripcion\": \"{{$randomLoremText}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/categories/{{id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/categories/{{id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"// Generar un stock actual aleatorio.\r",
+					"pm.environment.set(\r",
+					"    \"random_stock_actual\",\r",
+					"    _.random(0, 25)\r",
+					");\r",
+					"\r",
+					"// Generar un stock mínimo aleatorio.\r",
+					"pm.environment.set(\r",
+					"    \"random_stock_minimo\",\r",
+					"    _.random(1, 25)\r",
+					");\r",
+					"\r",
+					"// Generar un id de categoría aleatorio.\r",
+					"pm.environment.set(\r",
+					"    \"random_id_categoria\", _.random(1,6)\r",
+					");\r",
+					"\r",
+					"// Generar un nombre de Categoría aleatorio de entre un array de opciones.\r",
+					"// const categorias = [\r",
+					"//     \"Medicamento\",\r",
+					"//     \"Fungible\",\r",
+					"//     \"Inmovilización\",\r",
+					"//     \"Electromedicina-medición\",\r",
+					"//     \"Limpieza\",\r",
+					"//     \"Otros\"\r",
+					"// ];\r",
+					"// const randomCategoria = categorias[Math.floor(Math.random() * categorias.length)];\r",
+					"// pm.environment.set(\"random_categoria\", randomCategoria);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
