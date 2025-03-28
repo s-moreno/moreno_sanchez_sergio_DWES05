@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateProductRequest;
-use App\Http\Requests\UpdateProductRequest;
-use App\Models\Product;
+use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Category;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
-class ProductController extends Controller
+class CategoryController extends Controller
 {
     /**
-     * Devuelve un Json con todos los productos
-     * En caso de no encontrar productos, devuelve un error
+     * Devuelve un Json con todos las categorías
+     * En caso de no encontrar categorías, devuelve un error
      * @return JsonResponse
      */
     public function index(): JsonResponse
@@ -21,7 +21,7 @@ class ProductController extends Controller
             return response()->json([
                 'status' => 'success',
                 'code' => 200,
-                'data' => Product::all()
+                'data' => Category::all()
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -33,30 +33,30 @@ class ProductController extends Controller
     }
 
     /**
-     * Devuelve un Json con un producto específico
-     * En caso de no encontrar el producto, devuelve un error
+     * Devuelve un Json con una categoría específica
+     * En caso de no encontrar la categoría, devuelve un error
      * @param int $id
      * @return JsonResponse
      */
     public function show(int $id): JsonResponse
     {
         try {
-            // Buscar el producto por ID
-            $product = Product::find($id);
+            // Buscar la categoría por ID
+            $category = Category::find($id);
 
-            // Si no se encuentra el producto, devolver un error
-            if (!$product) {
+            // Si no se encuentra la categoría, devolver un error
+            if (!$category) {
                 return response()->json([
                     'status' => 'error',
                     'code' => 404,
-                    'message' => 'Producto no encontrado'
+                    'message' => 'Categoría no encontrada'
                 ], 404);
             }
-            // Devolver el producto
+            // Devolver la categoría
             return response()->json([
                 'status' => 'success',
                 'code' => 200,
-                'data' => $product
+                'data' => $category
             ], 200);
         } catch (Exception $e) {
             return response()->json([
@@ -68,26 +68,26 @@ class ProductController extends Controller
     }
 
     /**
-     * Crea un nuevo producto y lo guarda en la BD
+     * Crea una nueva categoría y lo guarda en la BD
      * En caso de error, devuelve un error
-     * @param CreateProductRequest $request
+     * @param CreateCategoryRequest $request
      * @return JsonResponse
      */
-    public function store(CreateProductRequest $request): JsonResponse
+    public function store(CreateCategoryRequest $request): JsonResponse
     {
         try {
             // Validación de los datos
             $validatedData = $request->validated();
 
-            // Guardar el producto en la BD
-            $product = Product::create($validatedData);
+            // Guardar la categoría en la BD
+            $category = Category::create($validatedData);
 
-            // Devolver el producto creado
+            // Devolver la categoría creada
             return response()->json([
                 'status' => 'success',
                 'code' => 201,
-                'message' => 'Producto creado correctamente.',
-                'data' => $product
+                'message' => 'Categoría creada correctamente.',
+                'data' => $category
             ], 201);
         } catch (Exception $e) {
 
@@ -100,39 +100,39 @@ class ProductController extends Controller
     }
 
     /**
-     * Actualiza un producto específico en la BD. Funciona tanto para actualizar todos los campos como para actualizar solo algunos (PUT y PATCH)
-     * En caso de no encontrar el producto, devuelve un error
-     * @param UpdateProductRequest $request
+     * Actualiza una categoría específico en la BD. Funciona tanto para actualizar todos los campos como para actualizar solo algunos (PUT y PATCH)
+     * En caso de no encontrar la categoría, devuelve un error
+     * @param UpdateCategoryRequest $request
      * @param int $id
      * @return JsonResponse
      */
-    public function update(UpdateProductRequest $request, int $id): JsonResponse
+    public function update(UpdateCategoryRequest $request, int $id): JsonResponse
     {
         try {
             // Buscar el producto por ID
-            $product = Product::find($id);
+            $category = Category::find($id);
 
             // Si no se encuentra el producto, devolver un error
-            if (!$product) {
+            if (!$category) {
                 return response()->json([
                     'status' => 'error',
                     'code' => 404,
-                    'message' => 'Producto no encontrado'
+                    'message' => 'Categoría no encontrado'
                 ], 404);
             }
 
             // Validación de los datos
             $validatedData = $request->validated();
 
-            // Actualizar el producto en la BD
-            $product->update($validatedData);
+            // Actualizar la categoría en la BD
+            $category->update($validatedData);
 
-            // Devolver el producto actualizado
+            // Devolver la categoría actualizada
             return response()->json([
                 'status' => 'success',
                 'code' => 200,
-                'message' => 'Producto actualizado correctamente.',
-                'data' => $product
+                'message' => 'Categoría actualizada correctamente.',
+                'data' => $category
             ], 200);
         } catch (Exception $e) {
             return response()->json([
@@ -144,66 +144,42 @@ class ProductController extends Controller
     }
 
     /**
-     * Elimina un producto específico de la BD
-     * En caso de no encontrar el producto, devuelve un error
+     * Elimina una categoría específica de la BD
+     * En caso de no encontrar la categoría, devuelve un error
      * @param int $id
      * @return JsonResponse
      */
     public function destroy(int $id): JsonResponse
     {
         try {
-            // Buscar el producto por ID
-            $product = Product::find($id);
+            // Buscar la categoría por ID
+            $product = Category::find($id);
 
-            // Si no se encuentra el producto, devolver un error
+            // Si no se encuentra la categoría, devolver un error
             if (!$product) {
                 return response()->json([
                     'status' => 'error',
                     'code' => 404,
-                    'message' => 'Producto no encontrado'
+                    'message' => 'Categoría no encontrado'
                 ], 404);
             }
 
-            // Eliminar el producto
+            // Eliminar la categoría
             $control = $product->delete();
             if (!$control) {
                 return response()->json([
                     'status' => 'error',
                     'code' => 500,
-                    'message' => 'Error al eliminar el producto'
+                    'message' => 'Error al eliminar la categoría'
                 ], 500);
             }
-            // Devolver el producto
+            // Devolver la categoría
             return response()->json([
                 'status' => 'success',
                 'code' => 200,
-                "message" => "Producto eliminado correctamente",
+                "message" => "Categoría eliminada correctamente",
                 'data' => $product
             ], 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'code' => 500,
-                'message' => 'Error en el servidor'
-            ], 500);
-        }
-    }
-
-    /**
-     * Devuelve un Json con los productos que tienen stock por debajo del mínimo
-     * @return JsonResponse
-     */
-    public function stockMin(): JsonResponse
-    {
-        try {
-            $products = Product::whereColumn('stock_actual', '<', 'stock_minimo')->get();
-
-            return response()->json([
-                'status' => 'success',
-                'code' => 200,
-                'message' => 'Productos con stock por debajo del mínimo',
-                'data' => $products
-            ]);
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
